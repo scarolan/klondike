@@ -1,5 +1,7 @@
 # Klondike Solitaire
 
+<img width="1182" height="559" alt="image" src="https://github.com/user-attachments/assets/37edab7c-dc63-4956-bd96-131caf339629" />
+
 A classic Klondike solitaire card game built with vanilla JavaScript, HTML, and CSS. Features beautiful pixel art fantasy playing cards.
 
 ## Play
