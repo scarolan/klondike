@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klondike Solitaire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <h1>Klondike Solitaire</h1>
+            <div class="controls">
+                <button id="new-game-btn">New Game</button>
+                <button id="hint-btn" class="hint-toggle">Hints: Off</button>
+                <span class="moves-counter">Moves: <span id="moves">0</span></span>
+            </div>
+        </header>
+
+        <div class="game-board">
+            <!-- Top row: Stock, Waste, and Foundation piles -->
+            <div class="top-row">
+                <div class="stock-waste">
+                    <div class="pile stock" id="stock">
+                        <!-- Stock pile (face-down draw pile) -->
+                    </div>
+                    <div class="pile waste" id="waste">
+                        <!-- Waste pile (drawn cards) -->
+                    </div>
+                </div>
+
+                <div class="spacer"></div>
+
+                <div class="foundations">
+                    <div class="pile foundation" id="foundation-0" data-suit="hearts"></div>
+                    <div class="pile foundation" id="foundation-1" data-suit="diamonds"></div>
+                    <div class="pile foundation" id="foundation-2" data-suit="clubs"></div>
+                    <div class="pile foundation" id="foundation-3" data-suit="spades"></div>
+                </div>
+            </div>
+
+            <!-- Bottom row: Tableau piles -->
+            <div class="tableau">
+                <div class="pile tableau-pile" id="tableau-0"></div>
+                <div class="pile tableau-pile" id="tableau-1"></div>
+                <div class="pile tableau-pile" id="tableau-2"></div>
+                <div class="pile tableau-pile" id="tableau-3"></div>
+                <div class="pile tableau-pile" id="tableau-4"></div>
+                <div class="pile tableau-pile" id="tableau-5"></div>
+                <div class="pile tableau-pile" id="tableau-6"></div>
+            </div>
+        </div>
+
+        <div id="win-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>Congratulations!</h2>
+                <p>You won in <span id="final-moves">0</span> moves!</p>
+                <button id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 50%, #1a472a 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.game-header h1 {
+    color: #ffd700;
+    font-size: 1.8rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background: linear-gradient(180deg, #ffd700 0%, #ffaa00 100%);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #1a472a;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.controls button:active {
+    transform: translateY(0);
+}
+
+.hint-toggle {
+    background: linear-gradient(180deg, #6b7280 0%, #4b5563 100%);
+    color: #fff;
+}
+
+.hint-toggle.active {
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+}
+
+.moves-counter {
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.game-board {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.top-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.stock-waste {
+    display: flex;
+    gap: 15px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.foundations {
+    display: flex;
+    gap: 15px;
+}
+
+.pile {
+    width: 90px;
+    height: 126px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.stock, .foundation {
+    background: rgba(0, 0, 0, 0.2);
+    border: 3px dashed rgba(255, 255, 255, 0.3);
+}
+
+.stock {
+    cursor: pointer;
+}
+
+.stock:hover {
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.stock.empty {
+    cursor: pointer;
+}
+
+.stock.empty::after {
+    content: '\21BB';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.waste {
+    background: transparent;
+    border: none;
+}
+
+.foundation::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    opacity: 0.3;
+}
+
+.foundation[data-suit="hearts"]::before { content: '\2665'; color: #e74c3c; }
+.foundation[data-suit="diamonds"]::before { content: '\2666'; color: #e74c3c; }
+.foundation[data-suit="clubs"]::before { content: '\2663'; color: #4a5568; }
+.foundation[data-suit="spades"]::before { content: '\2660'; color: #4a5568; }
+
+.tableau {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.tableau-pile {
+    background: rgba(0, 0, 0, 0.1);
+    border: 2px dashed rgba(255, 255, 255, 0.15);
+    min-height: 126px;
+    height: auto;
+}
+
+/* Card styling */
+.card {
+    width: 90px;
+    height: 126px;
+    border-radius: 8px;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    pointer-events: none;
+}
+
+.card.face-down {
+    cursor: default;
+}
+
+.card.face-up:hover {
+    transform: translateY(-5px);
+    z-index: 1000 !important;
+}
+
+.card.dragging {
+    opacity: 0.8;
+    z-index: 10000 !important;
+    cursor: grabbing;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.card.drag-child {
+    z-index: 10000 !important;
+}
+
+/* Tableau card stacking */
+.tableau-pile .card {
+    position: absolute;
+    left: 0;
+}
+
+/* Highlight valid drop targets */
+.pile.highlight {
+    box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.6);
+    border-color: #ffd700 !important;
+}
+
+.card.highlight {
+    box-shadow: 0 0 15px 3px rgba(255, 215, 0, 0.8);
+}
+
+/* Modal styling */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #2d5a3d 0%, #1a472a 100%);
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 3px solid #ffd700;
+}
+
+.modal-content h2 {
+    color: #ffd700;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.modal-content p {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+}
+
+.modal-content button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background: linear-gradient(180deg, #ffd700 0%, #ffaa00 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #1a472a;
+    transition: transform 0.1s;
+}
+
+.modal-content button:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+    .pile {
+        width: 70px;
+        height: 98px;
+    }
+
+    .card {
+        width: 70px;
+        height: 98px;
+    }
+
+    .game-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .top-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .spacer {
+        display: none;
+    }
+
+    .foundations {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .pile {
+        width: 45px;
+        height: 63px;
+    }
+
+    .card {
+        width: 45px;
+        height: 63px;
+    }
+
+    .tableau {
+        gap: 5px;
+    }
+
+    .stock-waste, .foundations {
+        gap: 5px;
+    }
+}
